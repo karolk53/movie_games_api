@@ -20,13 +20,31 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //API
 
+
+//USER ENDPOINTS
+Route::group(['middleware' => 'api', 'prefix' => 'auth', 'namespace' => 'App\Http\Controllers'], function ($router) {
+    Route::post('register', 'AuthController@register');
+    Route::post('login', 'AuthController@login');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::post('me', 'AuthController@me');
+
+});
+
+//GENRES ENDPOINTS
 Route::group(['prefix' => 'genre', 'namespace' => 'App\Http\Controllers'], function() {
     Route::get('/','GenreController@index');
 });
 
 
+//MOVIES ENDPOINTS
 Route::group(['prefix' => 'movie', 'namespace' => 'App\Http\Controllers'], function() {
     Route::get('/','MovieController@index');
     Route::get('/{movie}','MovieController@show');
     Route::get('/image/{filename}','MovieController@getImage');
 }); 
+
+//NOTES ENDPOINTS
+Route::group(['middleware' => 'api', 'prefix' => 'note', 'namespace' => 'App\Http\Controllers'], function() {
+    Route::post('/add','NoteController@store');
+});

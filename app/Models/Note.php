@@ -9,6 +9,13 @@ class Note extends Model
 {
     use HasFactory;
 
+    public $fillable = [
+        'amount',
+        'description',
+        'movie_id'
+    ];
+
+
     public function movie() {
         return $this->bleongsTo(Movie::class);
     }

@@ -23,7 +23,8 @@ class MovieResource extends JsonResource
             'voteAverage' => $this->vote_average,
             'voteCount' => $this->vote_count,
             'imagePath' => $this->image_path,
-            'genres' => $this->genres //GenreResource::collection($this->whenLoaded('genres'))
+            'genres' => GenreResource::collection($this->genres),
+            'notes' => NoteResource::collection($this->notes)
         ];
     }
 }

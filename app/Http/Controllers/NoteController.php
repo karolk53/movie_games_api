@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Note;
 use App\Http\Requests\StoreNoteRequest;
 use App\Http\Requests\UpdateNoteRequest;
+use Illuminate\Http\Request;
+use App\Models\Movie;
 
 class NoteController extends Controller
 {
@@ -34,9 +36,24 @@ class NoteController extends Controller
      * @param  \App\Http\Requests\StoreNoteRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreNoteRequest $request)
+    public function store(Request $request)
     {
-        //
+        $details = $request->only(['amount','description','movie_id']);
+
+        try{
+            $user = auth()->userOrFail();
+        }catch(\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e){
+            return response()->json(['error'=> $e->getMessage()]);
+        }
+
+        $movie = Movie::find($request->input('movie_id'));
+        $movie->vote_count += 1;
+        $movie->vote_average =  ($movie->vote_average+$request->input('amount'))/2;
+        $movie->save();
+
+        $note = $user->notes()->create($details);
+
+        return $note;
     }
 
     /**
