@@ -27,12 +27,23 @@ class MovieController extends Controller
         $filter = new MovieQuery();
         $filterItems = $filter->transform($request);
 
-        if(count($filterItems) == 0){
-            return new MovieCollection(Movie::paginate(20));
-        } else {
-            return new MovieCollection(Movie::where($filterItems)->paginate(20));
+
+        $genre = $request->query('genre') ?? null;
+        $year = $request->query('year') ?? null;
+
+        $movies = Movie::where($filterItems);
+        
+        if($genre != null){
+            $movies = $movies->whereHas('genres', function($q) use ($genre){
+                $q->where('id', '=', $genre);
+            });
+
+            if( $year != null){
+                $movies->whereYear('release_date',$year);
+            }
         }
 
+        return new MovieCollection($movies->paginate(20));
         
     }
 

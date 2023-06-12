@@ -48,3 +48,14 @@ Route::group(['prefix' => 'movie', 'namespace' => 'App\Http\Controllers'], funct
 Route::group(['middleware' => 'api', 'prefix' => 'note', 'namespace' => 'App\Http\Controllers'], function() {
     Route::post('/add','NoteController@store');
 });
+
+
+//FILES EXPORT
+
+Route::group(['prefix' => 'export', 'namespace' => 'App\Http\Controllers'], function() {
+    Route::get('/json','ExportController@exportToJson');
+    Route::get('/xml','ExportController@exportToXML');
+});
+
+
+//FILES IMPORT

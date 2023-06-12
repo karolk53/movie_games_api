@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 
 class MovieQuery {
     protected $safeParms = [
-        'adult' => ['eq'],
-        'voteAverage'=> ['gte']
+        'voteAverage'=> ['gte'],
     ];
 
 

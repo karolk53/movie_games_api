@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Models\User;
 
 class NoteResource extends JsonResource
 {
@@ -18,6 +19,7 @@ class NoteResource extends JsonResource
             'amount' => $this->amount,
             'description' => $this->description,
             'user_id' => $this->user_id,
+            'user' => User::find($this->user_id)->name,
             'movie_id' => $this->movie_id
         ];
     }

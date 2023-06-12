@@ -19,7 +19,7 @@ class MovieResource extends JsonResource
             'title' => $this->title,
             'overview' => $this->overview,
             'adult' => $this->adult,
-            'releaseDate' => $this->relese_date,
+            'releaseDate' => $this->release_date,
             'voteAverage' => $this->vote_average,
             'voteCount' => $this->vote_count,
             'imagePath' => $this->image_path,
