@@ -35,7 +35,7 @@ class MovieController extends Controller
         
         if($genre != null){
             $movies = $movies->whereHas('genres', function($q) use ($genre){
-                $q->where('id', '=', $genre);
+                $q->where('name', '=', $genre);
             });
 
             if( $year != null){
@@ -124,6 +124,7 @@ class MovieController extends Controller
             foreach($movies as $movieData){
                 $movie = new Movie();
 
+                $movie->id = $movieData['id'];
                 $movie->title = $movieData['title'];
                 $movie->overview = $movieData['overview'];
                 $movie->adult = $movieData['adult'];
